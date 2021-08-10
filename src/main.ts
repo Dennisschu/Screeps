@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-namespace */
+import gameLoop from "core/gameLoop";
 import { ErrorMapper } from "utils/ErrorMapper";
 
 declare global {
@@ -33,7 +35,7 @@ declare global {
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
 // Tim stinkt
 export const loop = ErrorMapper.wrapLoop(() => {
-  console.log(`Current game tick is ${Game.time}`);
+  // console.log(`Current game tick is ${Game.time}`);
 
   // Automatically delete memory of missing creeps
   for (const name in Memory.creeps) {
@@ -41,4 +43,5 @@ export const loop = ErrorMapper.wrapLoop(() => {
       delete Memory.creeps[name];
     }
   }
+  gameLoop();
 });
