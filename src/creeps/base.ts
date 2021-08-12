@@ -42,9 +42,14 @@ export default class {
     this.CheckEnergy(creep);
 
     if (!creep.memory.working) {
-      const target = this.GetSources(creep);
+      const target = creep.room.find(FIND_STRUCTURES, {
+        filter: structure => {
+          return structure.structureType === STRUCTURE_CONTAINER && structure.store[RESOURCE_ENERGY] > 100;
+        }
+      });
+      // const target = creep.pos.findClosestByPath;
       if (target) {
-        this.NotWorking(creep, target);
+        this.NotWorking(creep, target[0]);
       }
     } else {
       this.Work(creep);
@@ -61,8 +66,8 @@ export default class {
   protected static GetSources(creep: Creep): Source | null {
     return creep.pos.findClosestByPath(FIND_SOURCES);
   }
-  protected static NotWorking(creep: Creep, target: Source): void {
-    if (creep.harvest(target) === ERR_NOT_IN_RANGE) {
+  protected static NotWorking(creep: Creep, target: AnyStructure): void {
+    if (creep.withdraw(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
       creep.moveTo(target);
     }
   }

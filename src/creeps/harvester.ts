@@ -7,6 +7,24 @@ export default class extends baseline {
   public constructor(Name: string, Role: string, Body: BodyPartConstant[], Memory: CreepMemory) {
     super(Name, Role, Body, Memory);
   }
+  public static run(creep: Creep): void {
+    this.CheckEnergy(creep);
+
+    if (!creep.memory.working) {
+      const target = this.GetSources(creep);
+      if (target) {
+        this.HarvesterNotWorking(creep, target);
+      }
+    } else {
+      this.Work(creep);
+    }
+  }
+  public static HarvesterNotWorking(creep: Creep, target: Source): void {
+    if (creep.harvest(target) === ERR_NOT_IN_RANGE) {
+      creep.moveTo(target);
+    }
+  }
+
   protected static Work(creep: Creep): void {
     const targets: any[] | undefined = creep.room.find<any>(FIND_STRUCTURES, {
       filter: struct => {

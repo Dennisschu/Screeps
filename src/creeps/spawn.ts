@@ -1,12 +1,10 @@
-import { worker } from "cluster";
 import uuid from "../core/uuid";
 
 export default function (spawn: StructureSpawn): void {
-  const cbase: BodyPartConstant[] = [WORK, WORK, WORK, CARRY, CARRY, MOVE];
+  const cbase: BodyPartConstant[] = [WORK, CARRY, MOVE];
 
   if (!spawn.room.find(FIND_MY_CREEPS).length) {
-    const basic: BodyPartConstant[] = [WORK, CARRY, MOVE];
-    spawn.spawnCreep(basic, `harvester-${uuid()}`, {
+    spawn.spawnCreep(cbase, `harvester-${uuid()}`, {
       memory: { role: "harvester", room: "", working: false }
     });
     return;
@@ -14,8 +12,9 @@ export default function (spawn: StructureSpawn): void {
   if (
     _(Game.creeps)
       .filter({ memory: { role: `harvester` } })
-      .size() < 3
+      .size() < 6
   ) {
+    const basic: BodyPartConstant[] = [WORK, WORK, WORK, CARRY, MOVE];
     spawn.spawnCreep(cbase, `harvester-${uuid()}`, {
       memory: { role: "harvester", room: "", working: false }
     });
