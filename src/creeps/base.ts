@@ -1,6 +1,3 @@
-import { filter } from "lodash";
-import { basename } from "path";
-
 export default class {
   private body_: BodyPartConstant[];
   private name_: string;
@@ -44,7 +41,7 @@ export default class {
     if (!creep.memory.working) {
       const target = creep.room.find(FIND_STRUCTURES, {
         filter: structure => {
-          return structure.structureType === STRUCTURE_CONTAINER && structure.store[RESOURCE_ENERGY] > 100;
+          return structure.structureType === STRUCTURE_STORAGE && structure.store[RESOURCE_ENERGY] > 100;
         }
       });
       // const target = creep.pos.findClosestByPath;
@@ -64,7 +61,7 @@ export default class {
     }
   }
   protected static GetSources(creep: Creep): Source | null {
-    return creep.pos.findClosestByPath(FIND_SOURCES);
+    return creep.pos.findClosestByRange(FIND_SOURCES);
   }
   protected static NotWorking(creep: Creep, target: AnyStructure): void {
     if (creep.withdraw(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {

@@ -11,27 +11,38 @@ export default function (spawn: StructureSpawn): void {
   }
   if (
     _(Game.creeps)
-      .filter({ memory: { role: `harvester` } })
+      .filter({ memory: { role: `miner` } })
+      .size() < 4
+  ) {
+    const basic: BodyPartConstant[] = [WORK, WORK, WORK, MOVE];
+    spawn.spawnCreep(basic, `miner-${uuid()}`, {
+      memory: { role: "miner", room: "", working: false }
+    });
+    return;
+  } else if (
+    _(Game.creeps)
+      .filter({ memory: { role: `transporter` } })
       .size() < 6
   ) {
-    const basic: BodyPartConstant[] = [WORK, WORK, WORK, CARRY, MOVE];
-    spawn.spawnCreep(cbase, `harvester-${uuid()}`, {
-      memory: { role: "harvester", room: "", working: false }
+    const basic: BodyPartConstant[] = [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE];
+    spawn.spawnCreep(basic, `transporter-${uuid()}`, {
+      memory: { role: "transporter", room: "", working: false }
     });
     return;
   } else if (
     _(Game.creeps)
       .filter({ memory: { role: `upgrader` } })
-      .size() < 5
+      .size() < 6
   ) {
-    spawn.spawnCreep(cbase, `upgrader-${uuid()}`, {
+    const basic: BodyPartConstant[] = [CARRY, CARRY, CARRY, MOVE, WORK];
+    spawn.spawnCreep(basic, `upgrader-${uuid()}`, {
       memory: { role: "upgrader", room: "", working: false }
     });
     return;
   } else if (
     _(Game.creeps)
       .filter({ memory: { role: `builder` } })
-      .size() < 5
+      .size() < 3
   ) {
     spawn.spawnCreep(cbase, `builder-${uuid()}`, {
       memory: { role: "builder", room: "", working: false }

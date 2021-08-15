@@ -16,6 +16,10 @@ declare global {
     uuid: number;
     log: any;
   }
+  /* interface RoomMemory {
+    room: string;
+    resources: string;
+  } */
 
   interface CreepMemory {
     role: string;
@@ -44,4 +48,5 @@ export const loop = ErrorMapper.wrapLoop(() => {
     }
   }
   gameLoop();
+  // sources();
 });
