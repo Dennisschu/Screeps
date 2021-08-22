@@ -11,6 +11,7 @@ export default class extends base {
         filter: c => c.hits < c.hitsMax
       })
       .sort((a, b) => a.hits - b.hits);
+    console.log(repairables.toString());
     if (structure) {
       if (creep.build(structure) === ERR_NOT_IN_RANGE) {
         creep.moveTo(structure);

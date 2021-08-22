@@ -34,7 +34,7 @@ export default function (spawn: StructureSpawn): void {
       .filter({ memory: { role: `upgrader` } })
       .size() < 6
   ) {
-    const basic: BodyPartConstant[] = [CARRY, CARRY, CARRY, MOVE, WORK];
+    const basic: BodyPartConstant[] = [CARRY, CARRY, CARRY, CARRY, MOVE, WORK, WORK];
     spawn.spawnCreep(basic, `upgrader-${uuid()}`, {
       memory: { role: "upgrader", room: "", working: false }
     });
@@ -42,7 +42,7 @@ export default function (spawn: StructureSpawn): void {
   } else if (
     _(Game.creeps)
       .filter({ memory: { role: `builder` } })
-      .size() < 3
+      .size() < 8
   ) {
     spawn.spawnCreep(cbase, `builder-${uuid()}`, {
       memory: { role: "builder", room: "", working: false }

@@ -12,21 +12,23 @@ export default function (): void {
   for (const creepname in Game.creeps) {
     const creep = Game.creeps[creepname];
     switch (creep.memory.role) {
+      case "miner":
+        miner.run(creep);
+        break;
+      case "builder":
+        builder.run(creep);
+        break;
+
+      case "transporter":
+        transporter.run(creep);
+        break;
       case "harvester":
         harvester.run(creep);
         break;
       case "upgrader":
         upgrader.run(creep);
         break;
-      case "builder":
-        builder.run(creep);
-        break;
-      case "miner":
-        miner.run(creep);
-        break;
-      case "transporter":
-        transporter.run(creep);
-        break;
+
       default:
         upgrader.run(creep);
         break;
